@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cardio Disease Predictor</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.45), transparent 35%),
+                radial-gradient(circle at 85% 15%, rgba(129, 140, 248, 0.4), transparent 40%),
+                radial-gradient(circle at 50% 90%, rgba(236, 72, 153, 0.25), transparent 35%),
+                linear-gradient(135deg, #0f172a 0%, #111827 45%, #1e293b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            color: #e2e8f0;
+            animation: ambientShift 16s ease-in-out infinite alternate;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 460px;
+            background: rgba(15, 23, 42, 0.68);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            padding: 28px 24px;
+            border-radius: 16px;
+            box-shadow:
+                0 18px 40px rgba(2, 6, 23, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.28);
+        }
+
+        h2 {
+            margin: 0 0 18px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #f8fafc;
+            letter-spacing: 0.2px;
+            text-align: center;
+            background: linear-gradient(90deg, #38bdf8, #818cf8 45%, #f472b6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        form {
+            text-align: left;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px 12px;
+            margin: 7px 0;
+            border: 1px solid rgba(148, 163, 184, 0.38);
+            border-radius: 10px;
+            background: rgba(15, 23, 42, 0.55);
+            color: #f1f5f9;
+            font-size: 14px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+            outline: none;
+        }
+
+        input::placeholder {
+            color: #94a3b8;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #60a5fa;
+            background: rgba(15, 23, 42, 0.78);
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.22);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #06b6d4, #2563eb 45%, #7c3aed);
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+            box-shadow: 0 10px 24px rgba(79, 70, 229, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(79, 70, 229, 0.5);
+        }
+
+        button:active {
+            transform: translateY(0);
+            opacity: 0.95;
+        }
+
+        #result {
+            margin-top: 16px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(30, 41, 59, 0.68);
+            border: 1px solid rgba(125, 211, 252, 0.42);
+            color: #e0f2fe;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.5;
+            min-height: 48px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        @keyframes ambientShift {
+            0% {
+                background-position: 0% 50%;
+                filter: hue-rotate(0deg);
+            }
+            100% {
+                background-position: 100% 50%;
+                filter: hue-rotate(8deg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 22px 16px;
+                border-radius: 14px;
+            }
+
+            h2 {
+                font-size: 21px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Cardio Vascular Disease Prediction</h2>
+
+    <form id="form">
+        <input type="number" id="age" placeholder="Age" required>
+        
+        <select id="gender">
+            <option value="1">Male</option>
+            <option value="2">Female</option>
+        </select>
+
+        <input type="number" id="height" placeholder="Height (cm)" required>
+        <input type="number" id="weight" placeholder="Weight (kg)" required>
+        <input type="number" id="ap_hi" placeholder="Systolic BP (ap_hi)" required>
+        <input type="number" id="ap_lo" placeholder="Diastolic BP (ap_lo)" required>
+
+        <select id="cholesterol">
+            <option value="1">Normal Cholesterol</option>
+            <option value="2">Above Normal</option>
+            <option value="3">Well Above Normal</option>
+        </select>
+
+        <select id="gluc">
+            <option value="1">Normal Glucose</option>
+            <option value="2">Above Normal</option>
+            <option value="3">Well Above Normal</option>
+        </select>
+
+        <select id="smoke">
+            <option value="0">Non-Smoker</option>
+            <option value="1">Smoker</option>
+        </select>
+
+        <select id="alco">
+            <option value="0">No Alcohol</option>
+            <option value="1">Alcohol Intake</option>
+        </select>
+
+        <select id="active">
+            <option value="0">Not Active</option>
+            <option value="1">Physically Active</option>
+        </select>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    <div id="result"></div>
+</div>
+
+<script>
+document.getElementById("form").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const data = {
+        age: parseInt(document.getElementById("age").value),
+        gender: parseInt(document.getElementById("gender").value),
+        height: parseInt(document.getElementById("height").value),
+        weight: parseFloat(document.getElementById("weight").value),
+        ap_hi: parseInt(document.getElementById("ap_hi").value),
+        ap_lo: parseInt(document.getElementById("ap_lo").value),
+        cholesterol: parseInt(document.getElementById("cholesterol").value),
+        gluc: parseInt(document.getElementById("gluc").value),
+        smoke: parseInt(document.getElementById("smoke").value),
+        alco: parseInt(document.getElementById("alco").value),
+        active: parseInt(document.getElementById("active").value)
+    };
+
+    const response = await fetch("http://127.0.0.1:5000/predict", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+    document.getElementById("result").innerHTML =
+        "Prediction: " + result.result +
+        "<br>Risk Probability: " + result.probability;
+});
+</script>
+
+</body>
+</html>
