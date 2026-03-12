@@ -15,7 +15,7 @@ def load_model():
     global model, columns
 
     if model is None:
-        model_path = os.path.join(os.getcwd(), "cardio_best_model.pkl")
+        model_path = os.path.join(os.getcwd(), "cardio_random_forest_model.pkl")
 
         if not os.path.exists(model_path):
             raise Exception("Model file not found!")
@@ -40,26 +40,36 @@ def predict():
 
         df = pd.DataFrame([input_data])
 
-        # BMI feature engineering
+        # Feature Engineering (must match training)
         df["BMI"] = df["weight"] / (df["height"] / 100) ** 2
+        df["pulse_pressure"] = df["ap_hi"] - df["ap_lo"]
 
-        # Ensure correct column order
+        # Ensure correct feature order
         df = df[columns]
 
-        prediction = model.predict(df)[0]
-        probability = model.predict_proba(df)[0][1]
+        prediction = model.predict(df.values)[0]
+        probability = model.predict_proba(df.values)[0][1]
+
+        # Risk category
+        if probability < 0.3:
+            risk = "Low Risk"
+        elif probability < 0.6:
+            risk = "Moderate Risk"
+        elif probability < 0.8:
+            risk = "High Risk"
+        else:
+            risk = "Very High Risk"
 
         return jsonify({
             "prediction": int(prediction),
             "probability": round(float(probability), 3),
+            "risk_level": risk,
             "result": "Cardiovascular Disease Detected"
             if prediction == 1 else "Healthy (No Cardio Disease)"
         })
 
     except Exception as e:
-        return jsonify({
-            "error": str(e)
-        })
+        return jsonify({"error": str(e)})
 
 
 if __name__ == "__main__":

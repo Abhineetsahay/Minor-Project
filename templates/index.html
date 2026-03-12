@@ -222,7 +222,9 @@ document.getElementById("form").addEventListener("submit", async function(e) {
     const result = await response.json();
     document.getElementById("result").innerHTML =
         "Prediction: " + result.result +
-        "<br>Risk Probability: " + result.probability;
+        "<br>Risk Probability: " + result.probability + 
+        "<br>Risk Level: " + result.risk_level;
+        ;
 });
 </script>
 
